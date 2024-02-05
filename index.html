@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App By Zauraiz</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js"></script>
+
+    <style>
+        /* .weather {
+            display: none;
+        } */
+        .main {
+            display: none;
+        }
+
+       
+    </style>
+</head>
+<body>
+
+    <div class="glow-container">
+        <div class="ball"></div>
+        <div class="ball" style="--delay:-12s;--size:0.35;--speed:25s;"></div>
+        <div class="ball" style="--delay:-10s;--size:0.3;--speed:15s;"></div>
+      </div>
+
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="Enter City Name" class="searchbox">
+            <button class="searchBtn"><img src="./search.png" width="20px" height="20px" alt=""></button>
+        </div>
+        <div class="main">
+        <div class="weather">
+            <img src="./cloudy.png" alt="" height="100px" width="100px">
+            <h1 class="temp">31°C</h1>
+            <h1 class="city">Karachi</h1>
+        </div>
+
+        <div class="details">
+            <div class="col">
+                <img src="./humidity.png" width="50px" height="50px" alt="">
+                <p class="Humidity">31%</p>
+                <p>Humidity</p>
+            </div>
+    
+            <div class="col">
+                <img src="./wind.png" width="50px" height="50px" alt="">
+                <p class="wind">54 KM/Hour</p>
+                <p>Wind</p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const apikey = "040a39ff3edba094a3652675374af94a" 
+        const  apiUrl  = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
+        let searchBox = document.querySelector(".searchbox")
+        async function checkWeather(city){
+            let  response  = await fetch(apiUrl +city + `&appid=${apikey}`)
+            let data = await response.json()
+            console.log(data);
+            document.querySelector(".city").innerText=data.name
+            document.querySelector(".temp").innerText=Math.round(data.main.temp)+"°C"
+            document.querySelector(".humidity").innerText=data.main.humidity+"%"
+            document.querySelector(".wind").innerText=Math.round(data.wind.speed)+"km/h"
+    
+    
+        } 
+        let main = document.querySelector(".main") 
+        document.querySelector(".searchbtn").addEventListener("click",()=>{
+    
+          
+    
+            if(searchBox.value == "" ){
+                document.querySelector(".main").innerHTML="<h1>Invalid</h1>"
+    
+            }else{
+                checkWeather(searchBox.value);
+                main.style.display="block";
+            }
+        })
+     
+     </script>
+   
+</body>
+</html>
